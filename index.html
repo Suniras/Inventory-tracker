@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Inventory Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 Inventory Manager</h1>
+            <p>Your one stop to be able organise your life (also your inventory)</p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card total-items">
+                <div id="totalItems" class="stat-number">0</div>
+                <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat-card low-stock">
+                <div id="lowStock" class="stat-number">0</div>
+                <div class="stat-label">Low Stock</div>
+            </div>
+            <div class="stat-card out-of-stock">
+                <div id="outOfStock" class="stat-number">0</div>
+                <div class="stat-label">Out of Stock</div>
+            </div>
+            <div class="stat-card total-value">
+                <div id="totalValue" class="stat-number">$0</div>
+                <div class="stat-label">Total Value</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="controls">
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
+                    <select class="filter-select" id="filterSelect">
+                        <option value="all">All Items</option>
+                        <option value="low">Low Stock</option>
+                        <option value="out">Out of Stock</option>
+                        <option value="high">In Stock</option>
+                    </select>
+                </div>
+                <button class="add-btn" onclick="openAddModal()">
+                    <span>+</span> Add Product
+                </button>
+            </div>
+
+            <div id="inventoryTableContainer">
+                <table class="inventory-table" id="inventoryTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('name')">Product Name <span class="sort-indicator">↕</span></th>
+                            <th onclick="sortTable('category')">Category <span class="sort-indicator">↕</span></th>
+                            <th onclick="sortTable('quantity')">Quantity <span class="sort-indicator">↕</span></th>
+                            <th onclick="sortTable('price')">Price <span class="sort-indicator">↕</span></th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryBody">
+                        <!-- Items will be inserted here -->
+                    </tbody>
+                </table>
+
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">📦</div>
+                    <h3>No products in inventory</h3>
+                    <p>Click "Add Product" to get started</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Add New Product</h2>
+            <form id="productForm">
+                <div class="form-group">
+                    <label for="productName">Product Name *</label>
+                    <input type="text" id="productName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="productCategory">Category</label>
+                    <select id="productCategory">
+                        <option value="Electronics">Electronics</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Food & Beverage">Food & Beverage</option>
+                        <option value="Home & Garden">Home & Garden</option>
+                        <option value="Sports & Outdoor">Sports & Outdoor</option>
+                        <option value="Books & Media">Books & Media</option>
+                        <option value="Other">Other</option> 
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="productQuantity">Initial Quantity *</label>
+                    <input type="number" id="productQuantity" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="productPrice">Price per Unit ($)</label>
+                    <input type="number" id="productPrice" step="0.01" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="lowStockAlert">Low Stock Alert Level</label>
+                    <input type="number" id="lowStockAlert" min="0" value="10">
+                </div>
+            </form>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="saveProduct()">Save Product</button>
+            </div>
+        </div>
+    </div>
+
+    <script src=script.js></script>
+</body>
+
+</html>
